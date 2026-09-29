@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->redirectGuestsTo('/admin/login');
         $middleware->redirectUsersTo('/admin');
+        $middleware->alias([
+            'active' => \App\Http\Middleware\EnsureUserIsActive::class,
+            'module.permission' => \App\Http\Middleware\AuthorizeAdminRoute::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
