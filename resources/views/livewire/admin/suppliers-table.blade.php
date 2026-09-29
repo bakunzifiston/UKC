@@ -21,15 +21,17 @@
             <thead class="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
             <tr>
                 <th class="px-4 py-3"><button type="button" wire:click="sortBy('supplier_name')">Name</button></th>
-                <th class="px-4 py-3">Contact</th>
+                <th class="px-4 py-3">Telephone</th>
+                <th class="px-4 py-3">Location</th>
                 <th class="px-4 py-3 text-right">Actions</th>
             </tr>
             </thead>
             <tbody class="divide-y">
             @forelse ($suppliers as $supplier)
                 <tr>
-                    <td class="px-4 py-3">{{ $supplier->supplier_name }}</td>
-                    <td class="px-4 py-3">{{ $supplier->contact_info }}</td>
+                    <td class="px-4 py-3">{{ $supplier->displayName() }}</td>
+                    <td class="px-4 py-3">{{ $supplier->displayTelephone() }}</td>
+                    <td class="px-4 py-3">{{ $supplier->locationLabel() }}</td>
                     <td class="space-x-2 px-4 py-3 text-right">
                         <a href="{{ route('admin.suppliers.show', $supplier) }}" class="text-brand hover:underline">View</a>
                         <a href="{{ route('admin.suppliers.edit', $supplier) }}" class="text-brand hover:underline">Edit</a>
@@ -37,7 +39,7 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="3" class="px-4 py-10 text-center text-slate-400">No suppliers for this filter.</td></tr>
+                <tr><td colspan="4" class="px-4 py-10 text-center text-slate-400">No suppliers for this filter.</td></tr>
             @endforelse
             </tbody>
         </table>

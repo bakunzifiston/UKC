@@ -2,21 +2,15 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\Admin\Concerns\ValidatesPartyProfile;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreClientRequest extends FormRequest
 {
+    use ValidatesPartyProfile;
+
     public function authorize(): bool
     {
         return true;
-    }
-
-    public function rules(): array
-    {
-        return [
-            'client_name' => ['required', 'string', 'max:255'],
-            'contact_info' => ['required', 'string', 'max:255'],
-            'address' => ['nullable', 'string'],
-        ];
     }
 }
