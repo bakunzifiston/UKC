@@ -21,17 +21,17 @@
             <thead class="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
             <tr>
                 <th class="px-4 py-3"><button type="button" wire:click="sortBy('client_name')">Name</button></th>
-                <th class="px-4 py-3">Contact</th>
-                <th class="px-4 py-3">Address</th>
+                <th class="px-4 py-3">Telephone</th>
+                <th class="px-4 py-3">Location</th>
                 <th class="px-4 py-3 text-right">Actions</th>
             </tr>
             </thead>
             <tbody class="divide-y">
             @forelse($clients as $client)
                 <tr>
-                    <td class="px-4 py-3">{{ $client->client_name }}</td>
-                    <td class="px-4 py-3">{{ $client->contact_info }}</td>
-                    <td class="px-4 py-3">{{ $client->address }}</td>
+                    <td class="px-4 py-3">{{ $client->displayName() }}</td>
+                    <td class="px-4 py-3">{{ $client->displayTelephone() }}</td>
+                    <td class="px-4 py-3">{{ $client->locationLabel() }}</td>
                     <td class="space-x-2 px-4 py-3 text-right">
                         <a href="{{ route('admin.clients.show', $client) }}" class="text-brand hover:underline">View</a>
                         <a href="{{ route('admin.clients.edit', $client) }}" class="text-brand hover:underline">Edit</a>

@@ -2,23 +2,37 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasPartyProfile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
     use HasFactory;
+    use HasPartyProfile;
 
-    // Define the table name if it differs from the default
-    // protected $table = 'suppliers'; // Uncomment if your table name differs
-
-    // Define the fillable fields for mass assignment
     protected $fillable = [
-        'client_name',   // Allow mass assignment for supplier_name
-        'contact_info',    // Allow mass assignment for contact_info
-        'address',         // Allow mass assignment for address (nullable)
+        'client_name',
+        'contact_info',
+        'address',
+        'first_name',
+        'second_name',
+        'country',
+        'province',
+        'district',
+        'sector',
+        'cell',
+        'village',
+        'age',
+        'gender',
+        'email',
+        'telephone',
     ];
 
-    // Optionally, define the date format for created_at and updated_at columns
     protected $dates = ['created_at', 'updated_at'];
+
+    protected function partyDisplayNameColumn(): string
+    {
+        return 'client_name';
+    }
 }
