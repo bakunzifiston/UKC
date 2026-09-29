@@ -18,7 +18,10 @@ class UpdateUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->route('user'))],
             'email_verified_at' => ['nullable', 'date'],
-            'password' => ['nullable', 'string', 'max:255'],
+            'password' => ['nullable', 'string', 'min:8', 'max:255', 'confirmed'],
+            'is_active' => ['sometimes', 'boolean'],
+            'roles' => ['sometimes', 'array', 'min:1'],
+            'roles.*' => ['integer', 'exists:roles,id'],
         ];
     }
 }
