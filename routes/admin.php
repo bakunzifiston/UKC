@@ -5,12 +5,15 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GrowthLogController;
 use App\Http\Controllers\Admin\HydroponicsController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductSupplierController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\SiteController;
 use App\Http\Controllers\Admin\StaffMemberController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\SystemController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VisitorController;
 use Illuminate\Support\Facades\Route;
@@ -21,11 +24,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('login', [LoginController::class, 'store'])->name('login.store');
     });
 
-    Route::middleware('auth')->group(function () {
+    Route::middleware(['auth', 'active', 'module.permission'])->group(function () {
         Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
         Route::get('/', DashboardController::class)->name('dashboard');
+        Route::get('system', SystemController::class)->name('system.index');
 
+        Route::patch('users/{user}/active', [UserController::class, 'toggleActive'])->name('users.active');
+        Route::put('users/{user}/password', [UserController::class, 'updatePassword'])->name('users.password');
         Route::resource('users', UserController::class);
+        Route::resource('roles', RoleController::class);
+        Route::resource('permissions', PermissionController::class);
         Route::resource('sites', SiteController::class);
         Route::resource('suppliers', SupplierController::class);
         Route::resource('products', ProductController::class);
